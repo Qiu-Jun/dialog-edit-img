@@ -1,13 +1,14 @@
 /*
  * @Author: June
  * @Description:
- * @Date: 2023-01-17 12:46:35
+ * @Date: 2023-02-21 23:42:31
  * @LastEditors: June
- * @LastEditTime: 2023-02-21 23:19:13
+ * @LastEditTime: 2023-02-22 22:01:45
  */
 import { createApp } from 'vue';
 import router from '@/router';
 import App from './App.vue';
+import '@/styles/index.scss';
 
 function bootStrap() {
     const app = createApp(App);

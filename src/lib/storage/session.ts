@@ -1,9 +1,9 @@
 /*
  * @Author: June
  * @Description:
- * @Date: 2023-01-18 15:01:05
+ * @Date: 2023-02-21 23:42:31
  * @LastEditors: June
- * @LastEditTime: 2023-01-18 16:13:28
+ * @LastEditTime: 2023-02-21 23:50:06
  */
 export function getSession(key: string) {
     if (!key) throw new Error('key不能为空');

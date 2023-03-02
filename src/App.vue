@@ -3,15 +3,8 @@
  * @Description: 
  * @Date: 2023-01-17 12:46:35
  * @LastEditors: June
- * @LastEditTime: 2023-02-16 14:35:15
+ * @LastEditTime: 2023-02-21 23:47:04
 -->
 <template>
-    <el-config-provider :locale="locale">
-        <router-view />
-    </el-config-provider>
+    <router-view />
 </template>
-
-<script lang="ts" setup>
-import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
-const locale = zhCn;
-</script>

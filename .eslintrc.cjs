@@ -1,3 +1,10 @@
+/*
+ * @Author: June
+ * @Description:
+ * @Date: 2023-02-21 23:42:31
+ * @LastEditors: June
+ * @LastEditTime: 2023-02-23 13:39:22
+ */
 module.exports = {
     root: true,
     parser: 'vue-eslint-parser',
@@ -21,5 +28,7 @@ module.exports = {
     rules: {
         // override/add rules settings here, such as:
         'vue/multi-word-component-names': 'off',
+        'vue/prefer-import-from-vue': 'off',
+        'vue/require-default-prop': 'off',
     },
 };

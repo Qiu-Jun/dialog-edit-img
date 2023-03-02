@@ -18,8 +18,15 @@
         }
     },
     "dependencies": {
+        "@types/lodash": "^4.14.191",
+        "@types/lodash-es": "^4.17.6",
+        "@vue/shared": "^3.2.47",
+        "@vueuse/core": "^9.13.0",
         "clipboard": "^2.0.11",
+        "csstype": "^2.6.20",
+        "konva": "^8.4.2",
         "lodash-es": "^4.17.21",
+        "lodash-unified": "^1.0.2",
         "pinia": "^2.0.29",
         "vue": "^3.2.45",
         "vue-router": "^4.1.6"
