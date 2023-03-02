@@ -3,22 +3,27 @@
  * @Description:
  * @Date: 2023-01-17 12:46:35
  * @LastEditors: June
- * @LastEditTime: 2023-02-09 11:57:01
+ * @LastEditTime: 2023-03-02 23:58:07
 -->
 
-## Mall-Cook-v3
+## dialog-edit-img
+基于konva.js的简易编辑图片弹窗组件
 
-[商城低代码平台, mall-cook 的升级版](https://github.com/wangyuan389/mall-cook)
-
-## TODO
-
--   [x] 目录搭建(基于 Vue3、Vite、Pinia)
--   [x] 代码规范处理(eslint + prettier)
--   [x] husky 代码提交规范
--   [ ] 升级迁移(进行中)
--   [ ] 基于 fabric 重写图片编辑组件
--   [ ] ts 类型优化，目前用了很多 any
-
+## 功能
+- [ ] 添加文字
+- [x] Filters
+  - [x] blur
+  - [x] invert
+  - [x] enhance
+  - [x] grayscale
+  - [x] posterize
+  - [x] sepia
+- [ ] 输出处理
+  - [x] base64
+  - [ ] blob
+  - [ ] image
+- [ ] 配置上传处理
+- [ ] 构建npm包
 ## 使用
 
 ```bash
