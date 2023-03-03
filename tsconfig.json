@@ -24,10 +24,12 @@
         }
     },
     "include": [
+        "src/*.ts",
         "src/**/*.ts",
         "src/**/*.d.ts",
         "src/types/*.d.ts",
         "src/**/*.tsx",
-        "src/**/*.vue"
+        "src/**/*.vue",
+        "src/*.vue"
     ]
 }

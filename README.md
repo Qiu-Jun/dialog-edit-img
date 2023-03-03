@@ -3,7 +3,7 @@
  * @Description:
  * @Date: 2023-01-17 12:46:35
  * @LastEditors: June
- * @LastEditTime: 2023-03-03 00:10:21
+ * @LastEditTime: 2023-03-04 00:44:12
 -->
 
 ## dialog-edit-img
@@ -26,7 +26,7 @@
     -   [ ] blob
     -   [ ] image
 -   [ ] 配置上传处理
--   [ ] 构建 npm 包
+-   [x] 构建 npm 包
 
 ## 使用
 
