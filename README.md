@@ -3,7 +3,7 @@
  * @Description:
  * @Date: 2023-01-17 12:46:35
  * @LastEditors: June
- * @LastEditTime: 2023-03-04 00:44:12
+ * @LastEditTime: 2023-03-04 00:48:04
 -->
 
 ## dialog-edit-img
@@ -32,6 +32,13 @@
 
 ```bash
 # 安装依赖
-yarn install # or npm install
-yarn dev # or npm run dev
+yarn add ie-dialog # or npm install ie-dialog or pnpm install ie-dialog
+```
+
+```javascript
+// main.js
+import ieDialog from 'ie-dialog';
+import 'ie-dialog/dist/style.css';
+
+app.use(ieDialog);
 ```
