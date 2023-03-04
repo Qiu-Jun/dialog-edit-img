@@ -3,7 +3,7 @@
  * @Description: 
  * @Date: 2023-02-21 23:42:31
  * @LastEditors: June
- * @LastEditTime: 2023-03-03 19:38:42
+ * @LastEditTime: 2023-03-05 00:03:32
 -->
 <!--
  * @Author: June
@@ -13,8 +13,7 @@
  * @LastEditTime: 2023-03-02 23:46:12
 -->
 <template>
-    <div>12</div>
-    <a-dialog
+    <c-dialog
         v-model:model-value="data.a"
         :width="data.w + 'px'"
         @change="onChange"
@@ -33,15 +32,15 @@
                 <div class="menu-item" data-type="reset">还原</div>
             </div>
         </div>
-    </a-dialog>
+    </c-dialog>
 </template>
 
 <script setup>
 import { reactive, onMounted } from 'vue';
 import Konva from 'konva';
 import { debounce } from 'lodash-es';
-import aDialog from '@/components/dialog.vue';
-import tt from '@/assets/test.jpeg';
+import cDialog from './components/dialog.vue';
+import tt from './assets/test.jpeg';
 const data = reactive({
     a: true,
     w: 500,

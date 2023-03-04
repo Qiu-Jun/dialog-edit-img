@@ -24,12 +24,14 @@
         }
     },
     "include": [
+        "demo/*.ts",
+        "demo/**/*.ts",
+        "demo/**/*.d.ts",
+        "demo/types/*.d.ts",
+        "demo/**/*.tsx",
+        "demo/**/*.vue",
+        "demo/*.vue",
         "src/*.ts",
-        "src/**/*.ts",
-        "src/**/*.d.ts",
-        "src/types/*.d.ts",
-        "src/**/*.tsx",
-        "src/**/*.vue",
-        "src/*.vue"
+        "index.d.ts"
     ]
 }

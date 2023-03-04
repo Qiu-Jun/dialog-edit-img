@@ -10,7 +10,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
-        component: () => import('@/views/home/index.vue'),
+        component: () => import('../views/home/index.vue'),
     },
 ];
 
