@@ -3,10 +3,10 @@
  * @Description:
  * @Date: 2023-01-17 12:46:35
  * @LastEditors: June
- * @LastEditTime: 2023-03-04 00:53:26
+ * @LastEditTime: 2023-03-05 22:36:23
 -->
 
-## dialog-edit-img
+## ie-dialog(Image edit dialog)
 
 基于 konva.js 的简易编辑图片弹窗组件
 
@@ -31,10 +31,22 @@
 ## 使用
 
 ```bash
-# 安装依赖
-yarn add ie-dialog # or npm install ie-dialog or pnpm install ie-dialog
+# yarn
+yarn add ie-dialog 
+# npm
+npm install ie-dialog
+#pnpm
+pnpm install ie-dialog
 ```
 
+## 属性
+| 参数 |  是否必填  |  类型   |  默认  | 可选值 |
+| --- | --- | --- | --- | ---- |
+| visible | 是  | Boolean | false | false ro true |
+| outType | 非  | String | toDataURL | toDataURL, toBlob, toJSON  konva支持的导出类型 |
+| canvasW | 非  | String, Number | 500 | width |
+| imgH | 非  | Number | 370 | 图片的高度 |
+| imgSrc | 非  | String | ‘’ | base 64 or url |
 ```javascript
 // main.js
 import ieDialog from 'ie-dialog';

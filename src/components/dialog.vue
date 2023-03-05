@@ -1,10 +1,10 @@
 <template>
     <Teleport :to="props.appendTo" :disabled="!props.appendTo">
-        <Transition name="ei-dialog" appear>
+        <Transition name="ie-dialog" appear>
             <div
                 v-if="props.modelValue"
                 ref="dialogRef"
-                class="ei-dialog-wrapper"
+                class="ie-dialog-wrapper"
                 :style="style"
                 :class="{
                     'append-to-body': props.appendTo === 'body',
@@ -14,24 +14,24 @@
             >
                 <div
                     v-if="props.hasMask"
-                    class="ei-dialog-mask"
+                    class="ie-dialog-mask"
                     @click="onMaskClick"
                 ></div>
 
                 <div
                     ref="model"
-                    class="ei-dialog"
+                    class="ie-dialog"
                     :style="{ width: props.width }"
                 >
                     <!-- header -->
-                    <div v-if="!props.hideHeader" class="ei-dialog--header">
-                        <div class="ei-dialog--title">
+                    <div v-if="!props.hideHeader" class="ie-dialog--header">
+                        <div class="ie-dialog--title">
                             {{ props.title }}
                         </div>
 
                         <button
                             v-if="!props.hideCloseButton"
-                            class="ei-dialog--close-btn"
+                            class="ie-dialog--close-btn"
                             @click="onClickClose"
                         >
                             <svg viewBox="0 0 320 512">
@@ -43,20 +43,20 @@
                     </div>
 
                     <!-- body -->
-                    <div class="ei-dialog--body">
+                    <div class="ie-dialog--body">
                         <slot />
                     </div>
 
                     <!-- footer -->
-                    <div class="ei-dialog--footer">
+                    <div class="ie-dialog--footer">
                         <button
-                            class="ei-dialog--cancel-btn"
+                            class="ie-dialog--cancel-btn"
                             @click="onClickClose"
                         >
                             取消
                         </button>
                         <button
-                            class="ei-dialog--confirm-btn"
+                            class="ie-dialog--confirm-btn"
                             @click="onClickConfirm"
                         >
                             确认

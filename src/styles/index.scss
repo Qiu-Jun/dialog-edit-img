@@ -1,4 +1,4 @@
-$pre: 'ei';
+$pre: 'ie';
 
 .#{$pre}-dialog-wrapper {
     position: absolute;
@@ -119,8 +119,8 @@ $pre: 'ei';
     }
 
     &--body {
-        padding: 10px 15px;
         box-sizing: border-box;
+        margin: 0 15px;
         overflow-x: hidden;
         overflow-y: auto;
         flex: 1;

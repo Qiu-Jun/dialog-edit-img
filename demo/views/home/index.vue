@@ -3,7 +3,7 @@
  * @Description: 
  * @Date: 2023-02-21 23:42:31
  * @LastEditors: June
- * @LastEditTime: 2023-03-05 20:39:30
+ * @LastEditTime: 2023-03-05 22:17:14
 -->
 <template>
     <label for="pic">选择图片:</label>
@@ -19,6 +19,7 @@
     <ie-dialog
         ref="ieDialogRef"
         v-model:imgSrc="imgData"
+        v-model:visible="show"
         @result="editOnChange"
     >
     </ie-dialog>
@@ -28,14 +29,26 @@
 import { ref } from 'vue';
 const ieDialogRef = ref(null);
 const imgData = ref(null);
+
+const show = ref(false);
+
+const onOpen = () => {
+    show.value = true;
+};
+const onClose = () => {
+    show.value = false;
+};
+
 const onChange = (e) => {
     const imgFile = e.target.files[0];
     const readerBlob = URL.createObjectURL(imgFile);
     imgData.value = readerBlob;
+    onOpen();
 };
 
 const editOnChange = (e) => {
     console.log(e);
+    onClose();
 };
 </script>
 

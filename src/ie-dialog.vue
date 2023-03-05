@@ -3,12 +3,12 @@
  * @Description: 
  * @Date: 2023-02-21 23:42:31
  * @LastEditors: June
- * @LastEditTime: 2023-03-05 20:51:00
+ * @LastEditTime: 2023-03-05 22:27:22
 -->
 <template>
     <c-dialog
         ref="ieDialog"
-        v-model:model-value="state.show"
+        v-model:model-value="show"
         :width="props.canvasW + 'px'"
         @on-confirm="onConfirm"
         @close="onClose"
@@ -31,12 +31,16 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, nextTick, watchEffect } from 'vue';
+import { ref, nextTick, computed, watchEffect } from 'vue';
 import Konva from 'konva';
 import { debounce } from 'lodash-es';
 import cDialog from './components/dialog.vue';
 
 const props = defineProps({
+    visible: {
+        type: Boolean,
+        required: true,
+    },
     outType: {
         type: String,
         default: 'toDataURL', // toDataURL, toBlob, toJSON  konva支持的导出类型
@@ -53,25 +57,17 @@ const props = defineProps({
         type: String,
         default: '',
     },
-    padding: {
-        type: Number,
-        default: 15,
-    },
 });
 
 const emits = defineEmits(['update:imgSrc', 'result']);
+const show = computed(() => props.visible);
 const ieDialog = ref<InstanceType<typeof cDialog> | null>(null);
-
-const state = reactive({
-    show: false,
-});
 
 let stage: any = null;
 let kImg: any = null;
 
 const init = () => {
     const w: number = ~~props.canvasW;
-    const padding = ~~props.padding;
     stage = new Konva.Stage({
         container: '#img-edit', // id of container <div> *包裹舞台的DIV元素的ID
         width: w,
@@ -91,7 +87,7 @@ const init = () => {
             x: 0,
             y: 0,
             image: imgInfo,
-            width: w - padding * 2,
+            width: w,
             height: cnavasH / scale,
         });
         imgLayer.add(kImg);
@@ -103,7 +99,6 @@ const init = () => {
 
 const open = (img: string) => {
     if (!img) return;
-    state.show = true;
     nextTick(init);
 };
 
@@ -185,8 +180,7 @@ const onConfirm = async () => {
 };
 
 watchEffect(() => {
-    if (props.imgSrc) {
-        state.show = true;
+    if (props.visible) {
         nextTick(init);
     }
 });
@@ -199,7 +193,7 @@ defineExpose({
 <style lang="scss" scoped>
 .wrapper {
     .menu-wrap {
-        width: 26px;
+        width: 36px;
         position: absolute;
         left: 10px;
         top: 50%;
@@ -207,15 +201,12 @@ defineExpose({
         z-index: 1;
         .menu-item {
             display: inline-block;
-            width: 24px;
-            height: 24px;
-            line-height: 24px;
             text-align: center;
             margin-bottom: 4px;
             font-size: 12px;
             color: #333;
             border-radius: 4px;
-            padding: 0 4px;
+            padding: 2px 4px;
             cursor: pointer;
             background-color: rgba(255, 255, 255, 0.8);
             &:last-child {
