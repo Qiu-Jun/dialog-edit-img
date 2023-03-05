@@ -79,10 +79,6 @@ import {
     onMounted,
 } from 'vue';
 const props = defineProps({
-    outType: {
-        type: String,
-        default: 'toDataURL', // toDataURL, toBlob, toJSON
-    },
     appendTo: {
         type: [String, Object, null, undefined] as PropType<
             string | RendererElement | null | undefined
@@ -137,7 +133,7 @@ const props = defineProps({
     isPointerEventsNone: Boolean, // 包裹部分是否支持指针穿透
     beforeClose: Function as PropType<(cb: (ok: boolean) => void) => void>,
 });
-const emits = defineEmits(['update:modelValue', 'open', 'close', 'change']);
+const emits = defineEmits(['update:modelValue', 'open', 'close', 'onConfirm']);
 const visible = ref(props.modelValue);
 const close = () => {
     if (typeof props.beforeClose === 'function') {
@@ -153,7 +149,7 @@ const onClickClose = () => {
     close();
 };
 const onClickConfirm = () => {
-    emits('change', props.outType);
+    emits('onConfirm');
 };
 const onMaskClick = () => {
     if (props.canClickMaskClose) {
@@ -177,11 +173,11 @@ watch(visible, (v) => {
         emits('update:modelValue', v);
     }
 
-    if (v) {
-        emits('open');
-    } else {
-        emits('close');
-    }
+    // if (v) {
+    //     emits('open');
+    // } else {
+    //     emits('close');
+    // }
 });
 
 watch(

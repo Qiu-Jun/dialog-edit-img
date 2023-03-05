@@ -3,20 +3,15 @@
  * @Description: 
  * @Date: 2023-02-21 23:42:31
  * @LastEditors: June
- * @LastEditTime: 2023-03-05 00:03:32
--->
-<!--
- * @Author: June
- * @Description: 
- * @Date: 2023-02-21 23:42:31
- * @LastEditors: June
- * @LastEditTime: 2023-03-02 23:46:12
+ * @LastEditTime: 2023-03-05 20:51:00
 -->
 <template>
     <c-dialog
-        v-model:model-value="data.a"
-        :width="data.w + 'px'"
-        @change="onChange"
+        ref="ieDialog"
+        v-model:model-value="state.show"
+        :width="props.canvasW + 'px'"
+        @on-confirm="onConfirm"
+        @close="onClose"
     >
         <div class="wrapper">
             <div id="img-edit"></div>
@@ -35,32 +30,59 @@
     </c-dialog>
 </template>
 
-<script setup>
-import { reactive, onMounted } from 'vue';
+<script lang="ts" setup>
+import { ref, reactive, nextTick, watchEffect } from 'vue';
 import Konva from 'konva';
 import { debounce } from 'lodash-es';
 import cDialog from './components/dialog.vue';
-import tt from './assets/test.jpeg';
-const data = reactive({
-    a: true,
-    w: 500,
-    padding: 15,
-});
-let stage = null;
-let kImg = null;
 
-onMounted(() => {
+const props = defineProps({
+    outType: {
+        type: String,
+        default: 'toDataURL', // toDataURL, toBlob, toJSON  konva支持的导出类型
+    },
+    canvasW: {
+        type: [String, Number],
+        default: 500,
+    },
+    imgH: {
+        type: Number,
+        default: 370,
+    },
+    imgSrc: {
+        type: String,
+        default: '',
+    },
+    padding: {
+        type: Number,
+        default: 15,
+    },
+});
+
+const emits = defineEmits(['update:imgSrc', 'result']);
+const ieDialog = ref<InstanceType<typeof cDialog> | null>(null);
+
+const state = reactive({
+    show: false,
+});
+
+let stage: any = null;
+let kImg: any = null;
+
+const init = () => {
+    const w: number = ~~props.canvasW;
+    const padding = ~~props.padding;
     stage = new Konva.Stage({
         container: '#img-edit', // id of container <div> *包裹舞台的DIV元素的ID
-        width: data.w,
-        height: 370,
+        width: w,
+        height: props.imgH,
     });
     // 背景绘制
     const imgLayer = new Konva.Layer();
     const imgInfo = new Image();
 
     imgInfo.onload = function () {
-        const cnavasH = (data.w * imgInfo.height) / imgInfo.width;
+        const cnavasH = (w * imgInfo.height) / imgInfo.width;
         const scale = imgInfo.width / imgInfo.height;
         stage.setAttrs({
             height: cnavasH / scale,
@@ -69,22 +91,21 @@ onMounted(() => {
             x: 0,
             y: 0,
             image: imgInfo,
-            width: data.w - data.padding * 2,
+            width: w - padding * 2,
             height: cnavasH / scale,
         });
-
-        // kImg.cache();
-        // kImg.filters([Konva.Filters.Threshold]);
-        // kImg.threshold(0.1);
-        // add the shape to the layer
         imgLayer.add(kImg);
         imgLayer.batchDraw();
     };
-    imgInfo.src = tt;
-    // 'https://www.gelifood.com/upload/goods/20220415/6300790574881aa47673e61649986298goods_img.png';
-
+    imgInfo.src = props.imgSrc;
     stage.add(imgLayer);
-});
+};
+
+const open = (img: string) => {
+    if (!img) return;
+    state.show = true;
+    nextTick(init);
+};
 
 const handleMenu = debounce(function (event) {
     const typeObj = event.target.dataset || event.srcElement.dataset;
@@ -142,22 +163,37 @@ const handleMenu = debounce(function (event) {
     }
 }, 300);
 
-const onChange = (key) => {
+const onClose = () => {
+    emits('update:imgSrc', null);
+};
+
+const onConfirm = async () => {
+    const type = props.outType;
     try {
-        console.log(key);
         const img = stage
-            ? stage[key]({
+            ? await stage[type]({
                   mimeType: 'image/png', // the output format
                   quality: 1, // the quality of the output image (0–1)
                   pixelRatio: 1, // the pixel ratio of the canvas
               })
             : null;
-
-        console.log(img);
+        emits('result', img);
+        ieDialog.value?.close();
     } catch (error) {
         console.log(error);
     }
 };
+
+watchEffect(() => {
+    if (props.imgSrc) {
+        state.show = true;
+        nextTick(init);
+    }
+});
+
+defineExpose({
+    open,
+});
 </script>
 
 <style lang="scss" scoped>
