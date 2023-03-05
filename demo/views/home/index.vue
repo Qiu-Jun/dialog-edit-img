@@ -3,7 +3,7 @@
  * @Description: 
  * @Date: 2023-02-21 23:42:31
  * @LastEditors: June
- * @LastEditTime: 2023-03-05 22:17:14
+ * @LastEditTime: 2023-03-06 00:14:24
 -->
 <template>
     <label for="pic">选择图片:</label>
@@ -40,10 +40,17 @@ const onClose = () => {
 };
 
 const onChange = (e) => {
-    const imgFile = e.target.files[0];
-    const readerBlob = URL.createObjectURL(imgFile);
-    imgData.value = readerBlob;
-    onOpen();
+    try {
+        console.log('9999');
+        const imgFile = e.target.files[0];
+        const readerBlob = URL.createObjectURL(imgFile);
+        console.log(readerBlob);
+        imgData.value = readerBlob;
+        show.value = true;
+        console.log(imgData.value, show.value);
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 const editOnChange = (e) => {

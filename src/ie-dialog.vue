@@ -3,15 +3,15 @@
  * @Description: 
  * @Date: 2023-02-21 23:42:31
  * @LastEditors: June
- * @LastEditTime: 2023-03-05 22:50:40
+ * @LastEditTime: 2023-03-06 00:30:49
 -->
 <template>
     <c-dialog
         ref="ieDialog"
-        v-model:model-value="show"
+        v-model:model-value="dialogVisible"
         :width="props.canvasW + 'px'"
         @on-confirm="onConfirm"
-        @close="onClose"
+        @close="onDialogClose"
     >
         <div class="wrapper">
             <div id="img-edit"></div>
@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, nextTick, computed, watchEffect } from 'vue';
+import { ref, nextTick, watch } from 'vue';
 import Konva from 'konva';
 import { debounce } from 'lodash-es';
 import cDialog from './components/dialog.vue';
@@ -59,12 +59,23 @@ const props = defineProps({
     },
 });
 
-const emits = defineEmits(['update:imgSrc', 'updata:visible', 'result']);
-const show = computed(() => props.visible);
+const emits = defineEmits(['update:imgSrc', 'update:visible', 'result']);
 const ieDialog = ref<InstanceType<typeof cDialog> | null>(null);
 
+const dialogVisible = ref(props.visible);
 let stage: any = null;
 let kImg: any = null;
+
+watch(
+    () => props.visible,
+    (v) => {
+        dialogVisible.value = v;
+        emits('update:visible', v);
+        if (v) {
+            nextTick(init);
+        }
+    },
+);
 
 const init = () => {
     const w: number = ~~props.canvasW;
@@ -97,16 +108,25 @@ const init = () => {
     stage.add(imgLayer);
 };
 
+const initKonva = () => {
+    stage = null;
+    kImg = null;
+};
+
 const open = (img: string) => {
     if (!img) return;
     nextTick(init);
+};
+
+// 关闭dialog
+const onDialogClose = () => {
+    initKonva();
 };
 
 const handleMenu = debounce(function (event) {
     const typeObj = event.target.dataset || event.srcElement.dataset;
     if (!typeObj || !typeObj.type) throw new Error('type is undefined');
     if (!kImg) throw new Error('kImg is null');
-    console.log(typeObj);
     switch (typeObj.type) {
         case 'text':
             var layer = new Konva.Layer();
@@ -136,7 +156,6 @@ const handleMenu = debounce(function (event) {
             kImg.enhance(0.4);
             break;
         case 'grayscale':
-            console.log('grayscale');
             kImg.cache();
             kImg.filters([Konva.Filters.Grayscale]);
             break;
@@ -158,10 +177,6 @@ const handleMenu = debounce(function (event) {
     }
 }, 300);
 
-const onClose = () => {
-    emits('update:imgSrc', null);
-};
-
 const onConfirm = async () => {
     const type = props.outType;
     try {
@@ -173,18 +188,13 @@ const onConfirm = async () => {
               })
             : null;
         emits('result', img);
+        emits('update:visible', false);
         ieDialog.value?.close();
-        emits('updata:visible', false);
+        initKonva();
     } catch (error) {
         console.log(error);
     }
 };
-
-watchEffect(() => {
-    if (props.visible) {
-        nextTick(init);
-    }
-});
 
 defineExpose({
     open,
