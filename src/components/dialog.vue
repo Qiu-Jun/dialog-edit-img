@@ -173,11 +173,11 @@ watch(visible, (v) => {
         emits('update:modelValue', v);
     }
 
-    // if (v) {
-    //     emits('open');
-    // } else {
-    //     emits('close');
-    // }
+    if (v) {
+        emits('open');
+    } else {
+        emits('close');
+    }
 });
 
 watch(
