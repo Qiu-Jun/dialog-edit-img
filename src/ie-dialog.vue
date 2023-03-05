@@ -3,7 +3,7 @@
  * @Description: 
  * @Date: 2023-02-21 23:42:31
  * @LastEditors: June
- * @LastEditTime: 2023-03-05 22:27:22
+ * @LastEditTime: 2023-03-05 22:50:40
 -->
 <template>
     <c-dialog
@@ -59,7 +59,7 @@ const props = defineProps({
     },
 });
 
-const emits = defineEmits(['update:imgSrc', 'result']);
+const emits = defineEmits(['update:imgSrc', 'updata:visible', 'result']);
 const show = computed(() => props.visible);
 const ieDialog = ref<InstanceType<typeof cDialog> | null>(null);
 
@@ -174,6 +174,7 @@ const onConfirm = async () => {
             : null;
         emits('result', img);
         ieDialog.value?.close();
+        emits('updata:visible', false);
     } catch (error) {
         console.log(error);
     }
